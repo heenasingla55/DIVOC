@@ -1,4 +1,4 @@
-FROM node:lts-alpine
+FROM node:20.14.0-alpine3.20
 WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
 ENV CERTIFICATE_NAMESPACE "https://cowin.gov.in/credentials/testCertificate/v1"
