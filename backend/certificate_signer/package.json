@@ -11,7 +11,7 @@
   "license": "GPL",
   "dependencies": {
     "certificate-signer-library": "^2.0.5",
-    "etcd3": "^1.1.0",
+    "etcd3": "^1.1.1",
     "kafkajs": "^1.15.0",
     "mustache": "^4.2.0",
     "ramda": "^0.27.1",
