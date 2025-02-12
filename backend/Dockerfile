@@ -28,7 +28,7 @@ RUN cd registration_api && GOFLAGS=" -tags=musl" SPEC_FILE="../dockerdeps/interf
 RUN cd notification-service && GOFLAGS=" -tags=musl" SPEC_FILE="../dockerdeps/interfaces/notification-service.yaml" make all
 
 # Start fresh from a smaller image
-FROM alpine:3.9 as vaccination_api
+FROM alpine:3.19.6 as vaccination_api
 LABEL name=vaccination_api
 RUN apk add ca-certificates
 COPY --from=build_base /tmp/divoc/vaccination_api/divoc-server /app/divoc-server
@@ -36,14 +36,14 @@ COPY vaccination_api/config /config
 EXPOSE 8000
 CMD ["/app/divoc-server", "--scheme", "http", "--port", "8000", "--host", "0.0.0.0"]
 
-FROM alpine:3.9 as analytics_feed
+FROM alpine:3.19.6 as analytics_feed
 LABEL name=analytics_feed
 RUN apk add ca-certificates
 COPY --from=build_base /tmp/divoc/vaccination_api/analytics_feed /app/analytics_feed
 COPY vaccination_api/config /config
 CMD ["/app/analytics_feed"]
 
-FROM alpine:3.9 as certificate_processor
+FROM alpine:3.19.6 as certificate_processor
 LABEL name=certificate_processor
 RUN apk add ca-certificates
 COPY --from=build_base /tmp/divoc/vaccination_api/certificate_processor /app/certificate_processor
@@ -51,7 +51,7 @@ COPY vaccination_api/config /config
 CMD ["/app/certificate_processor"]
 
 #portal api
-FROM alpine:3.9 as portal_api
+FROM alpine:3.19.6 as portal_api
 LABEL name=portal_api
 RUN apk add ca-certificates
 COPY --from=build_base /tmp/divoc/portal_api/divoc-portal-api-server /app/divoc-portal-api-server
@@ -60,7 +60,7 @@ EXPOSE 8001
 CMD ["/app/divoc-portal-api-server", "--scheme", "http", "--port", "8001", "--host", "0.0.0.0"]
 
 #registration api
-FROM alpine:3.9 as registration_api
+FROM alpine:3.19.6 as registration_api
 LABEL name=registration_api
 RUN apk add ca-certificates
 COPY --from=build_base /tmp/divoc/registration_api/divoc-registration-api-server /app/divoc-registration-api-server
@@ -69,7 +69,7 @@ EXPOSE 8002
 CMD ["/app/divoc-registration-api-server", "--scheme", "http", "--port", "8002", "--host", "0.0.0.0"]
 
 #notification-service
-FROM alpine:3.9 as notification-service
+FROM alpine:3.19.6 as notification-service
 LABEL name=notification-service
 RUN apk add ca-certificates
 COPY --from=build_base /tmp/divoc/notification-service/notification-service /app/notification-service
@@ -78,7 +78,7 @@ EXPOSE 8765
 CMD ["/app/notification-service", "--scheme", "http", "--port", "8765", "--host", "0.0.0.0"]
 
 #digilocker_support_api
-FROM alpine:3.9 as digilocker_support_api
+FROM alpine:3.19.6 as digilocker_support_api
 LABEL name=digilocker_support_api
 RUN apk add ca-certificates
 COPY --from=build_base /tmp/divoc/vaccination_api/digilocker_support_api /app/digilocker_support_api
